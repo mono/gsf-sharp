@@ -11,4 +11,6 @@
   <attr path="/api/namespace/object[@cname='GsfOutput']/method[@name='Name']" name="name">GetName</attr>
   <attr path="/api/namespace/object[@cname='GsfOutput']/method[@name='Seek']" name="hidden">1</attr>
   <attr path="/api/namespace/object[@cname='GsfOutfileMSOle']/method[@name='SetClassId']/*/*[@name='clsid']" name="array">1</attr>
+  <attr path="/api/namespace/object[@cname='GsfOutputIOChannel']/constructor[@cname='gsf_output_iochannel_new']" name="hidden">1</attr>
+  <attr path="/api/namespace/object[@cname='GsfInputMemory']/constructor[@cname='gsf_input_memory_new_from_iochannel']" name="hidden">1</attr>
 </metadata>
