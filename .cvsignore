@@ -12,4 +12,4 @@ makefile.in
 install-sh
 missing
 mkinstalldirs
-gtksourceview-sharp.pc
+gsf-sharp.pc

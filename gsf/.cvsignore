@@ -3,7 +3,7 @@ makefile
 *.dll
 generated
 generated-stamp
-gtksourceview-api.xml
+gsf-api.xml
 AssemblyInfo.cs
-gtksourceview-sharp.dll.config
+gsf-sharp.dll.config
 gtk-sharp.pub
