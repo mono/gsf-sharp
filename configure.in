@@ -124,5 +124,4 @@ gsf/AssemblyInfo.cs
 gsf/gsf-sharp.dll.config
 gsf/makefile
 gsf-sharp.pc
-doc/Makefile
 ])
