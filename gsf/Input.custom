@@ -11,3 +11,26 @@
 			System.Runtime.InteropServices.Marshal.Copy (raw_ret, ret, 0, num_bytes);
 			return ret;
 		}
+
+		[DllImport("libgsf-1-1.dll")]
+		static extern bool gsf_input_seek(IntPtr raw, long offset, int whence);
+
+		public bool Seek(long offset, System.IO.SeekOrigin origin) {
+			int whence;
+			switch (origin) {
+			case System.IO.SeekOrigin.Begin:
+				whence = 1;
+				break;
+			case System.IO.SeekOrigin.Current:
+				whence = 0;
+				break;
+			case System.IO.SeekOrigin.End:
+				whence = 2;
+				break;
+			default:
+				return true;
+			}
+			bool raw_ret = gsf_input_seek(Handle, offset, whence);
+			bool ret = raw_ret;
+			return ret;
+		}
