@@ -1,0 +1,13 @@
+
+		[DllImport("libgsf-1-1.dll")]
+		static extern IntPtr gsf_input_read(IntPtr raw, int num_bytes, IntPtr optional_buffer);
+
+		public byte[] Read(int num_bytes) {
+			IntPtr raw_ret = gsf_input_read(Handle, num_bytes, IntPtr.Zero);
+			if (raw_ret == IntPtr.Zero) {
+				return null;
+			}
+			byte[] ret = new byte[num_bytes];
+			System.Runtime.InteropServices.Marshal.Copy (raw_ret, ret, 0, num_bytes);
+			return ret;
+		}

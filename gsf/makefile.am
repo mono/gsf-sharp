@@ -1,0 +1,50 @@
+LIBRARY_NAME=	gsf-sharp
+LIBRARY=	$(LIBRARY_NAME).dll
+APIS=		gsf-api.xml
+
+ASSEMBLIES=	/pkg:gtk-sharp
+
+EXTRA_DIST = $(sources) Gsf.metadata gsf-api.raw AssemblyInfo.cs.in
+
+DISTCLEANFILES = AssemblyInfo.cs
+
+noinst_DATA = gsf-sharp.dll
+
+apidir = @gtksharp_prefix@/share/gapi
+api_DATA = gsf-api.xml
+
+all: $(LIBRARY)
+
+gsf-api.xml:
+	cp $(srcdir)/gsf-api.raw gsf-api.xml
+	chmod u+w gsf-api.xml
+	$(GAPI_FIXUP) --api=gsf-api.xml --metadata=$(srcdir)/Gsf.metadata
+
+generated-stamp: $(APIS) $(sources) Gsf.metadata Global.custom Input.custom
+	$(GAPI_CODEGEN) --generate $(APIS) \
+	--outdir=generated --customdir=. --assembly-name=gsf-sharp && touch generated-stamp
+
+sources = \
+AssemblyInfo.cs
+
+build_sources = $(addprefix $(srcdir)/, $(sources))
+
+gtk-sharp.snk: $(top_srcdir)/gtk-sharp.snk
+	cp $(top_srcdir)/gtk-sharp.snk .
+
+$(LIBRARY): generated-stamp $(build_sources) gtk-sharp.snk
+	$(CSC) --unsafe --target library $(ASSEMBLIES) \
+	generated/*.cs $(build_sources) -o $(LIBRARY)
+
+CLEANFILES = $(LIBRARY) generated/*.cs generated-stamp gsf-api.xml gtk-sharp.snk
+
+distclean-local:
+	rm -f makefile
+
+install-data-local:
+	echo "$(GACUTIL) /i $(LIBRARY) /f $(GACUTIL_FLAGS)";  \
+	$(GACUTIL) /i $(LIBRARY) /f $(GACUTIL_FLAGS) || exit 1;
+
+uninstall-local:
+	echo "$(GACUTIL) /u $(LIBRARY_NAME) $(GACUTIL_FLAGS)"; \
+	$(GACUTIL) /u $(LIBRARY_NAME) $(GACUTIL_FLAGS) || exit 1;

@@ -1,0 +1,9 @@
+prefix=@prefix@
+exec_prefix=${prefix}
+libdir=@libdir@
+
+
+Name: Gsf#
+Description: Gsf# - libgsf .NET Binding
+Version: @VERSION@
+Libs: -r:${libdir}/mono/gtk-sharp/gsf-sharp.dll

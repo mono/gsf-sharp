@@ -1,0 +1,9 @@
+
+SUBDIRS=		gsf
+EXTRA_DIST=		gsf-sharp.pc.in gtk-sharp.snk
+
+pkgconfigdir = @libdir@/pkgconfig
+pkgconfig_DATA = gsf-sharp.pc
+
+distclean-local:
+	rm -f makefile

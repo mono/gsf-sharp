@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<metadata>
+  <attr path="/api/namespace/object[@cname='GsfInput']/method[@name='Size']" name="name">GetSize</attr>
+  <attr path="/api/namespace/object[@cname='GsfInput']/method[@name='Remaining']" name="name">GetRemaining</attr>
+  <attr path="/api/namespace/object[@cname='GsfInput']/method[@name='Eof']" name="name">GetEof</attr>
+  <attr path="/api/namespace/object[@cname='GsfInput']/method[@name='Name']" name="name">GetName</attr>
+  <attr path="/api/namespace/object[@cname='GsfOutput']/method[@name='Size']" name="name">GetSize</attr>
+  <attr path="/api/namespace/object[@cname='GsfOutput']/method[@name='IsClosed']" name="name">GetIsClosed</attr>
+  <attr path="/api/namespace/object[@cname='GsfOutput']/method[@name='Name']" name="name">GetName</attr>
+  <attr path="/api/namespace/object[@cname='GsfOutput']/method[@name='Read']" name="hidden">1</attr>
+  <attr path="/api/namespace/object[@cname='GsfDocMetaData']" name="hidden">1</attr>
+  <attr path="/api/namespace/object[@cname='GsfOutfileMSOle']/method[@name='SetClassId']/*/*[@name='clsid']" name="array">1</attr>
+</metadata>
