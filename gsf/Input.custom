@@ -31,6 +31,6 @@
 				return true;
 			}
 			bool raw_ret = gsf_input_seek(Handle, offset, whence);
-			bool ret = raw_ret;
+			bool ret = !raw_ret; /* Reverse this so that it's the same as Output. */
 			return ret;
 		}
