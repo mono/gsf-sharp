@@ -774,7 +774,44 @@
         </parameters>
       </method>
     </object>
-    <struct name="DocMetaData" cname="GsfDocMetaData" opaque="true"/>
+    <object name="DocMetaData" cname="GsfDocMetaData" parent="GObject">
+      <method name="Error" cname="gsf_doc_meta_data_error" shared="true">
+        <return-type type="GQuark"/>
+      </method>
+      <method name="Foreach" cname="gsf_doc_meta_data_foreach">
+        <return-type type="void"/>
+        <parameters>
+          <parameter type="GHFunc" name="func"/>
+          <parameter type="gpointer" name="user_data"/>
+        </parameters>
+      </method>
+      <method name="GetProp" cname="gsf_doc_meta_data_get_prop">
+        <return-type type="GsfDocProp*"/>
+        <parameters>
+          <parameter type="const-char*" name="name"/>
+        </parameters>
+      </method>
+      <method name="GetType" cname="gsf_doc_meta_data_get_type" shared="true">
+        <return-type type="GType"/>
+      </method>
+      <constructor cname="gsf_doc_meta_data_new"/>
+      <method name="RemoveProp" cname="gsf_doc_meta_data_remove_prop">
+        <return-type type="void"/>
+        <parameters>
+          <parameter type="const-char*" name="name"/>
+        </parameters>
+      </method>
+      <method name="SetProp" cname="gsf_doc_meta_data_set_prop">
+        <return-type type="void"/>
+        <parameters>
+          <parameter type="const-char*" name="name"/>
+          <parameter type="const-GValue*" name="value"/>
+        </parameters>
+      </method>
+      <method name="Size" cname="gsf_doc_meta_data_size">
+        <return-type type="gsize"/>
+      </method>
+    </object>
     <struct name="DocProp" cname="GsfDocProp" opaque="true"/>
     <boxed name="Timestamp" cname="GsfTimestamp">
       <field cname="date" type="GDate"/>

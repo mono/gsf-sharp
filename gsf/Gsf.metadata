@@ -10,6 +10,5 @@
   <attr path="/api/namespace/object[@cname='GsfOutput']/method[@name='IsClosed']" name="name">GetIsClosed</attr>
   <attr path="/api/namespace/object[@cname='GsfOutput']/method[@name='Name']" name="name">GetName</attr>
   <attr path="/api/namespace/object[@cname='GsfOutput']/method[@name='Seek']" name="hidden">1</attr>
-  <attr path="/api/namespace/object[@cname='GsfDocMetaData']" name="hidden">1</attr>
   <attr path="/api/namespace/object[@cname='GsfOutfileMSOle']/method[@name='SetClassId']/*/*[@name='clsid']" name="array">1</attr>
 </metadata>

@@ -1,3 +1,11 @@
+2004-12-03  Veerapuram Varadhan  <vvaradhan@novell.com>
+
+	* gsf/Global.custom: Added GetPropVal and GetPropValStr methods.
+	* gsf/makefile.am: add new .custom file
+	* gsf/Gsf.metadata: removed Gsf.DocMetaData from being hidden.
+	* gsf/gsf-api.raw: Added DocMetaData class definition.
+	* gsf/Msole.custom: Added definition for MetaDataReadReal method.
+	
 2004-07-05  Todd Berman  <tberman@off.net>
 
 	* configure.in:

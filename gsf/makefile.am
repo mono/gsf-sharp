@@ -4,7 +4,7 @@ APIS=		gsf-api.xml
 
 ASSEMBLIES=	/pkg:gtk-sharp
 
-CUSTOM_FILES = Global.custom Input.custom Output.custom
+CUSTOM_FILES = Global.custom Input.custom Output.custom Msole.custom
 
 EXTRA_DIST = $(sources) Gsf.metadata gsf-api.raw AssemblyInfo.cs.in $(CUSTOM_FILES)
 

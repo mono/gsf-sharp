@@ -5,3 +5,22 @@
 		public static void Init() {
 		    gsf_init();
 		}
+
+		[DllImport("libgsf-1-1.dll")]
+		static extern GLib.Value gsf_get_prop_val(IntPtr prop);
+
+		public static GLib.Value GetPropVal(Gsf.DocProp prop) {
+			GLib.Value raw_ret = gsf_get_prop_val(prop.Handle);
+			GLib.Value ret = raw_ret;
+			return ret;
+		}
+
+		[DllImport("libgsf-1-1.dll")]
+		static extern IntPtr gsf_get_prop_val_str(IntPtr prop);
+
+		public static string GetPropValStr(Gsf.DocProp prop) {
+			IntPtr raw_ret = gsf_get_prop_val_str(prop.Handle);
+			string ret = GLib.Marshaller.PtrToStringGFree(raw_ret);
+			return ret;
+		}
+
