@@ -12,7 +12,7 @@ DISTCLEANFILES = AssemblyInfo.cs
 
 noinst_DATA = gsf-sharp.dll
 
-apidir = @gtksharp_prefix@/share/gapi
+apidir = $(datadir)/gapi-2.0
 api_DATA = gsf-api.xml
 
 all: $(LIBRARY)
