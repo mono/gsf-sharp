@@ -1,4 +1,19 @@
-2004-03-03  Christopher James Lahey  <clahey@novell.com>
+2005-08-18  Joe Shaw  <joeshaw@novell.com>
+
+	* configure.in: Version 0.4.  Don't check for mint, install the
+	assemblies into the right directory, require libgsf 1.12.1 and gtk-sharp-2.0.
+	* gsf/Msole.custom: Remove this.
+	* gsf/Global.custom: Remove GetPropVal() and GetPropValStr().
+	* gsf/makefile.am: Use gtk-sharp-2.0, remove Msole.custom.
+	* gsf/Gsf.metadata: Add a crapload of metadata tweaks, mostly to
+	work around an odd API in libgsf and the fact that the gtk-sharp
+	parser doesn't handle it.
+	* gsf/gsf-api.raw: Regenerated.
+	* sources/gsf-sharp-sources.xml: Deal with 1.12.1 instead of
+	1.10.1.
+	* sources/makefile: Use gapi2-parser, get the 1.12.1 tarball.
+
+2005-03-03  Christopher James Lahey  <clahey@novell.com>
 
 	* configure.in: Updated version.
 	* gsf/Gsf.metadata: Hide duplicate constructors for GsfOutputIOChannel and GsfInputMemory.
