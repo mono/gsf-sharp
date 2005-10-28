@@ -74,7 +74,7 @@ else
 fi
 AC_SUBST(MONODOC)
 
-API_VERSION="0.0.0.3"
+API_VERSION="0.0.0.5"
 AC_SUBST(API_VERSION)
 
 AM_CONDITIONAL(ENABLE_MONODOC, test "x$enable_monodoc" = "xyes")
