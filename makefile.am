@@ -1,5 +1,5 @@
 
-SUBDIRS=		gsf
+SUBDIRS=		gsf glue
 EXTRA_DIST=		gsf-sharp.pc.in gtk-sharp.snk
 
 pkgconfigdir = @libdir@/pkgconfig

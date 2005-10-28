@@ -1,4 +1,15 @@
-2004-08-18  Joe Shaw  <joeshaw@novell.com>
+2005-10-28  Veerapuram Varadhan <vvaradhan@novell.com>
+
+	Fixes 316120, b.x.c: 76185
+	* gsf/Gsf.metadata: Hide the Get/Set methods for DocProp value.
+	* gsf/DocProp.custom: Tweaks to work around odd API in libgsf that returns GValue*.  This uses the glue code as the workaround.
+	* glue/gsf-doc-prop-glue.c: Wrapper for gsf_doc_prop_get_val and gsf_doc_prop_set_val functions.
+	* glue/gsf-doc-prop-glue.h: Glue header.
+	* glue/Makefile.am: Make script.
+	* makefile.am: build glue code
+	* configure.in: -- ditto --
+	
+2005-08-18  Joe Shaw  <joeshaw@novell.com>
 
 	* gsf/makefile.am: Install gsf-api.xml into gapi-2.0 dir in
 	$datadir, not whatever prefix gtk-sharp is in.

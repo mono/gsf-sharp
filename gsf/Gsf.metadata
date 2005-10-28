@@ -57,6 +57,11 @@
 
   <!-- And now clean up the API a bit -->
   <attr path="/api/namespace/struct[@cname='GsfDocProp']/method[@name='GetVal']/return-type" name="type">const-GValue*</attr>
+
+  <attr path="/api/namespace/struct[@cname='GsfDocProp']/method[@cname='gsf_doc_prop_get_val']" name="hidden">1</attr>
+  <attr path="/api/namespace/struct[@cname='GsfDocProp']/method[@cname='gsf_doc_prop_set_val']" name="hidden">1</attr>
+  <attr path="/api/namespace/struct[@cname='GsfDocProp']/property[@name='Val']" name="hidden">1</attr>
+
   <attr path="/api/namespace/object[@cname='GsfInput']/method[@name='Size']" name="name">GetSize</attr>
   <attr path="/api/namespace/object[@cname='GsfInput']/method[@name='Remaining']" name="name">GetRemaining</attr>
   <attr path="/api/namespace/object[@cname='GsfInput']/method[@name='Eof']" name="name">GetEof</attr>
@@ -75,5 +80,4 @@
   <attr path="/api/namespace/object[@cname='GsfOutputStdio']/constructor[@cname='gsf_output_stdio_new_valist']" name="hidden">1</attr>
   <attr path="/api/namespace/object[@cname='GsfInputMemory']/constructor[@cname='gsf_input_memory_new_from_iochannel']" name="hidden">1</attr>
   <attr path="/api/namespace/boxed[@cname='GsfTimestamp']/field[@name='Date']" name="hidden">1</attr>
-
 </metadata>
