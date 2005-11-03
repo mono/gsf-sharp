@@ -1,5 +1,9 @@
 2005-11-03  Joe Shaw  <joeshaw@novell.com>
 
+	* configure.in: Version 0.6
+
+2005-11-03  Joe Shaw  <joeshaw@novell.com>
+
         * gsf/DocProp.custom: Change the value parameter to be ref rather
         than out, since the glib is expecting it to be zeroed out.  Patch
         from Daniel Drake.
