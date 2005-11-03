@@ -1,0 +1,25 @@
+
+		[DllImport("libgsfglue")]
+		static extern void gsf_doc_prop_glue_get_val(IntPtr raw, out GLib.GType type, ref GLib.Value gvalue);
+
+		[DllImport("libgsfglue")]
+		static extern void gsf_doc_prop_glue_set_val(IntPtr raw, ref GLib.Value val);
+
+		public object Val { 
+			get {
+				GLib.GType type;
+				GLib.Value gvalue = GLib.Value.Empty;
+
+				gsf_doc_prop_glue_get_val(Handle, out type, ref gvalue);
+
+				if (type != GLib.GType.None)
+					return gvalue.Val;
+				else
+					return null;
+			}
+			set {
+				GLib.Value gvalue = new GLib.Value (value);
+				gsf_doc_prop_glue_set_val(Handle, ref gvalue);
+			}
+		}
+
