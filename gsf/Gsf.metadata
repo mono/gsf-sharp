@@ -1,80 +1,37 @@
 <?xml version="1.0"?>
 <metadata>
 
-<!--
-     gsf uses "char const *" instead of "const char *" which throws the
-     generator off.  The following XPath magic maps them to the right types,
-     but we lose the argument naming, so we just name everything "arg".  But
-     some functions take multiple arguments that get the name "arg", so we
-     have to handle those by hand.
--->
-
-  <attr path="//*[@type='char'][@name='const*']" name="type">const-char*</attr>
-  <attr path="//*[@type='xmlChar'][@name='const*']" name="type">const-char*</attr>
-  <attr path="//*[@type='xmlChar'][@name='const**']" name="type">const-char**</attr>
-  <attr path="//*[@name='const*']" name="name">arg</attr>
-  <attr path="//*[@name='const**']" name="name">arg2</attr>
-  <attr path="//*[@type='charconst-*']" name="type">const-char*</attr>
-
-  <attr path="/api/namespace/object[@cname='GsfOutfile']/constructor[@cname='gsf_outfile_new_child_full']/parameters/parameter[@name='arg'][1]" name="name">arg1</attr>
-  <attr path="/api/namespace/object[@cname='GsfOutfile']/constructor[@cname='gsf_outfile_new_child_full']/parameters/parameter[@name='arg'][1]" name="name">arg2</attr>
-
-  <attr path="/api/namespace/object[@cname='GsfOutfile']/constructor[@cname='gsf_outfile_new_child_varg']/parameters/parameter[@name='arg'][1]" name="name">arg1</attr>
-  <attr path="/api/namespace/object[@cname='GsfOutfile']/constructor[@cname='gsf_outfile_new_child_varg']/parameters/parameter[@name='arg'][1]" name="name">arg2</attr>
-
-  <attr path="/api/namespace/object[@cname='GsfOutfileStdio']/constructor[@cname='gsf_outfile_stdio_new_full']/parameters/parameter[@name='arg'][1]" name="name">arg1</attr>
-  <attr path="/api/namespace/object[@cname='GsfOutfileStdio']/constructor[@cname='gsf_outfile_stdio_new_full']/parameters/parameter[@name='arg'][1]" name="name">arg2</attr>
-
-  <attr path="/api/namespace/object[@cname='GsfOutputIconv']/constructor[@cname='gsf_output_iconv_new']/parameters/parameter[@name='arg'][1]" name="name">arg1</attr>
-  <attr path="/api/namespace/object[@cname='GsfOutputIconv']/constructor[@cname='gsf_output_iconv_new']/parameters/parameter[@name='arg'][1]" name="name">arg2</attr>
-
-  <attr path="/api/namespace/object[@cname='GsfOutputStdio']/constructor[@cname='gsf_output_stdio_new_full']/parameters/parameter[@name='arg'][1]" name="name">arg1</attr>
-  <attr path="/api/namespace/object[@cname='GsfOutputStdio']/constructor[@cname='gsf_output_stdio_new_full']/parameters/parameter[@name='arg'][1]" name="name">arg2</attr>
-
-  <attr path="/api/namespace/struct[@cname='GsfXMLIn']/method[@cname='gsf_xml_in_namecmp']/parameters/parameter[@name='arg'][1]" name="name">arg1</attr>
-  <attr path="/api/namespace/struct[@cname='GsfXMLIn']/method[@cname='gsf_xml_in_namecmp']/parameters/parameter[@name='arg'][1]" name="name">arg2</attr>
-
-  <attr path="/api/namespace/object[@cname='GsfXMLOut']/method[@cname='gsf_xml_out_add_cstr']/parameters/parameter[@name='arg'][1]" name="name">arg1</attr>
-  <attr path="/api/namespace/object[@cname='GsfXMLOut']/method[@cname='gsf_xml_out_add_cstr']/parameters/parameter[@name='arg'][1]" name="name">arg2</attr>
-
-  <attr path="/api/namespace/object[@cname='GsfXMLOut']/method[@cname='gsf_xml_out_add_cstr_unchecked']/parameters/parameter[@name='arg'][1]" name="name">arg1</attr>
-  <attr path="/api/namespace/object[@cname='GsfXMLOut']/method[@cname='gsf_xml_out_add_cstr_unchecked']/parameters/parameter[@name='arg'][1]" name="name">arg2</attr>
-
-  <attr path="/api/namespace/object[@cname='GsfXMLOut']/method[@cname='gsf_xml_out_add_base64']/parameters/parameter[@name='arg'][1]" name="name">arg1</attr>
-  <attr path="/api/namespace/object[@cname='GsfXMLOut']/method[@cname='gsf_xml_out_add_base64']/parameters/parameter[@name='arg'][1]" name="name">arg2</attr>
-
-  <attr path="/api/namespace/object[@cname='GsfXMLOut']/method[@cname='gsf_xml_out_simple_element']/parameters/parameter[@name='arg'][1]" name="name">arg1</attr>
-  <attr path="/api/namespace/object[@cname='GsfXMLOut']/method[@cname='gsf_xml_out_simple_element']/parameters/parameter[@name='arg'][1]" name="name">arg2</attr>
-
+  <!-- Clean up the API a bit -->
+  <!-- Generator doesn't handle "GSList *foo, *bar;" -->
   <attr path="/api/namespace/struct[@cname='GsfZipVDir']/field[@name='LastChild']" name="cname">last_child</attr>
   <attr path="/api/namespace/struct[@cname='GsfZipVDir']/field[@name='LastChild']" name="type">GSList**</attr>
 
-  <!-- 
-       This sucks, because it hides all the fields, but the parser has a hard
-       time with libgsf, and it's no worse than it was with gtk-sharp 1.0.
-  -->
-  <attr path="//field" name="hidden">1</attr>
+  <!-- Generator doesn't map FALSE to 0 -->
+  <attr path="/api/namespace/enum[@cname='GsfXMLContent']/member[@cname='GSF_XML_NO_CONTENT']" name="value">0</attr>
 
-  <!-- And now clean up the API a bit -->
-  <attr path="/api/namespace/struct[@cname='GsfDocProp']/method[@name='GetVal']/return-type" name="type">const-GValue*</attr>
-
+  <!-- Overridden by our C glue -->
   <attr path="/api/namespace/struct[@cname='GsfDocProp']/method[@cname='gsf_doc_prop_get_val']" name="hidden">1</attr>
   <attr path="/api/namespace/struct[@cname='GsfDocProp']/method[@cname='gsf_doc_prop_set_val']" name="hidden">1</attr>
   <attr path="/api/namespace/struct[@cname='GsfDocProp']/property[@name='Val']" name="hidden">1</attr>
 
+  <!-- Rename a bunch of methods to get nice properties -->
   <attr path="/api/namespace/object[@cname='GsfInput']/method[@name='Size']" name="name">GetSize</attr>
   <attr path="/api/namespace/object[@cname='GsfInput']/method[@name='Remaining']" name="name">GetRemaining</attr>
   <attr path="/api/namespace/object[@cname='GsfInput']/method[@name='Eof']" name="name">GetEof</attr>
   <attr path="/api/namespace/object[@cname='GsfInput']/method[@name='Name']" name="name">GetName</attr>
-  <attr path="/api/namespace/object[@cname='GsfInput']/method[@name='Read']" name="hidden">1</attr>
-  <attr path="/api/namespace/object[@cname='GsfInput']/method[@name='Seek']" name="hidden">1</attr>
   <attr path="/api/namespace/object[@cname='GsfInputGZip']/property[@name='Raw']" name="name">IsRaw</attr>
   <attr path="/api/namespace/object[@cname='GsfOutput']/method[@name='Size']" name="name">GetSize</attr>
   <attr path="/api/namespace/object[@cname='GsfOutput']/method[@name='IsClosed']" name="name">GetIsClosed</attr>
   <attr path="/api/namespace/object[@cname='GsfOutput']/method[@name='Name']" name="name">GetName</attr>
-  <attr path="/api/namespace/object[@cname='GsfOutput']/method[@name='Seek']" name="hidden">1</attr>
   <attr path="/api/namespace/object[@cname='GsfOutputGZip']/property[@name='Raw']" name="name">IsRaw</attr>
+
+  <!-- Mark this method as taking an array -->
   <attr path="/api/namespace/object[@cname='GsfOutfileMSOle']/method[@name='SetClassId']/*/*[@name='clsid']" name="array">1</attr>
+
+  <!-- And lastly, hide a bunch of stuff -->
+  <attr path="/api/namespace/object[@cname='GsfInput']/method[@name='Read']" name="hidden">1</attr>
+  <attr path="/api/namespace/object[@cname='GsfInput']/method[@name='Seek']" name="hidden">1</attr>
+  <attr path="/api/namespace/object[@cname='GsfOutput']/method[@name='Seek']" name="hidden">1</attr>
   <attr path="/api/namespace/object[@cname='GsfOutfileStdio']/constructor[@cname='gsf_outfile_stdio_new_valist']" name="hidden">1</attr>
   <attr path="/api/namespace/object[@cname='GsfOutputIOChannel']/constructor[@cname='gsf_output_iochannel_new']" name="hidden">1</attr>
   <attr path="/api/namespace/object[@cname='GsfOutputStdio']/constructor[@cname='gsf_output_stdio_new_valist']" name="hidden">1</attr>

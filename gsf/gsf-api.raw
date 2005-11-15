@@ -6,14 +6,33 @@
         Please DO NOT MODIFY THIS FILE, modify .metadata files instead.
 
 -->
-  <namespace name="Gsf" library="libgsf-1-1.dll">
+  <namespace name="Gsf" library="libgsf-1.dll">
+    <enum name="ClipFormat" cname="GsfClipFormat" type="enum">
+      <member cname="GSF_CLIP_FORMAT_WINDOWS_CLIPBOARD" name="WindowsClipboard" value="-1" />
+      <member cname="GSF_CLIP_FORMAT_MACINTOSH_CLIPBOARD" name="MacintoshClipboard" value="-2" />
+      <member cname="GSF_CLIP_FORMAT_GUID" name="Guid" value="-3" />
+      <member cname="GSF_CLIP_FORMAT_NO_DATA" name="NoData" />
+      <member cname="GSF_CLIP_FORMAT_CLIPBOARD_FORMAT_NAME" name="ClipboardFormatName" value="1" />
+      <member cname="GSF_CLIP_FORMAT_UNKNOWN" name="Unknown" />
+    </enum>
+    <enum name="ClipFormatWindows" cname="GsfClipFormatWindows" type="enum">
+      <member cname="GSF_CLIP_FORMAT_WINDOWS_ERROR" name="Error" value="-1" />
+      <member cname="GSF_CLIP_FORMAT_WINDOWS_UNKNOWN" name="Unknown" value="-2" />
+      <member cname="GSF_CLIP_FORMAT_WINDOWS_METAFILE" name="Metafile" value="3" />
+      <member cname="GSF_CLIP_FORMAT_WINDOWS_DIB" name="Dib" value="8" />
+      <member cname="GSF_CLIP_FORMAT_WINDOWS_ENHANCED_METAFILE" name="EnhancedMetafile" value="14" />
+    </enum>
+    <enum name="Error" cname="GsfError" type="enum">
+      <member cname="GSF_ERROR_OUT_OF_MEMORY" name="OutOfMemory" />
+      <member cname="GSF_ERROR_INVALID_DATA" name="InvalidData" />
+    </enum>
     <enum name="OutputCsvQuotingMode" cname="GsfOutputCsvQuotingMode" gtype="gsf_output_csv_quoting_mode_get_type" type="enum">
       <member cname="GSF_OUTPUT_CSV_QUOTING_MODE_NEVER" name="Never" />
       <member cname="GSF_OUTPUT_CSV_QUOTING_MODE_AUTO" name="Auto" />
       <member cname="GSF_OUTPUT_CSV_QUOTING_MODE_ALWAYS" name="Always" />
     </enum>
     <enum name="XMLContent" cname="GsfXMLContent" type="enum">
-      <member cname="GSF_XML_NO_CONTENT" name="NoContent" />
+      <member cname="GSF_XML_NO_CONTENT" name="NoContent" value="FALSE" />
       <member cname="GSF_XML_CONTENT" name="Content" />
       <member cname="GSF_XML_SHARED_CONTENT" name="SharedContent" />
     </enum>
@@ -30,12 +49,19 @@
       <member cname="GSF_ZIP_DEFLATED_BETTER" name="DeflatedBetter" value="9" />
       <member cname="GSF_ZIP_IMPLODED_BETTER" name="ImplodedBetter" value="10" />
     </enum>
+    <callback name="XMLInExtDtor" cname="GsfXMLInExtDtor">
+      <return-type type="void" />
+      <parameters>
+        <parameter type="GsfXMLIn*" name="xin" />
+        <parameter type="gpointer" name="old_state" />
+      </parameters>
+    </callback>
     <callback name="XMLInUnknownFunc" cname="GsfXMLInUnknownFunc">
       <return-type type="gboolean" />
       <parameters>
-        <parameter type="GsfXMLIn*" name="state" />
-        <parameter type="xmlChar" name="const*" />
-        <parameter type="xmlChar" name="const**" />
+        <parameter type="GsfXMLIn*" name="xin" />
+        <parameter type="const-xmlChar*" name="elem" />
+        <parameter type="const-xmlChar**" name="attrs" />
       </parameters>
     </callback>
     <object name="DocPropVector" cname="GsfDocPropVector" parent="GObject">
@@ -74,14 +100,14 @@
       <method name="Lookup" cname="gsf_doc_meta_data_lookup">
         <return-type type="GsfDocProp*" />
         <parameters>
-          <parameter type="char" name="const*" />
+          <parameter type="const-char*" name="name" />
         </parameters>
       </method>
       <constructor cname="gsf_doc_meta_data_new" />
       <method name="Remove" cname="gsf_doc_meta_data_remove">
         <return-type type="void" />
         <parameters>
-          <parameter type="char" name="const*" />
+          <parameter type="const-char*" name="name" />
         </parameters>
       </method>
       <method name="Size" cname="gsf_doc_meta_data_size">
@@ -90,7 +116,7 @@
       <method name="Steal" cname="gsf_doc_meta_data_steal">
         <return-type type="GsfDocProp*" />
         <parameters>
-          <parameter type="char" name="const*" />
+          <parameter type="const-char*" name="name" />
         </parameters>
       </method>
       <method name="Store" cname="gsf_doc_meta_data_store">
@@ -134,7 +160,7 @@
       </method>
       <constructor cname="gsf_infile_stdio_new">
         <parameters>
-          <parameter type="char" name="const*" />
+          <parameter type="const-char*" name="root" />
           <parameter type="GError**" name="err" />
         </parameters>
       </constructor>
@@ -149,13 +175,13 @@
       <method name="ChildByName" cname="gsf_infile_child_by_name">
         <return-type type="GsfInput*" />
         <parameters>
-          <parameter type="char" name="const*" />
+          <parameter type="const-char*" name="name" />
         </parameters>
       </method>
       <method name="ChildByVname" cname="gsf_infile_child_by_vname">
         <return-type type="GsfInput*" />
         <parameters>
-          <parameter type="char" name="const*" />
+          <parameter type="const-char*" name="name" />
           <parameter ellipsis="true" />
         </parameters>
       </method>
@@ -163,7 +189,7 @@
         <return-type type="GType" />
       </method>
       <method name="NameByIndex" cname="gsf_infile_name_by_index">
-        <return-type type="charconst-*" />
+        <return-type type="const-char*" />
         <parameters>
           <parameter type="int" name="i" />
         </parameters>
@@ -192,7 +218,7 @@
       </method>
       <constructor cname="gsf_input_bonobo_new">
         <parameters>
-          <parameter type="const-Bonobo_Stream" name="stream" />
+          <parameter type="Bonobo_Stream" name="const-stream" />
           <parameter type="GError**" name="err" />
         </parameters>
       </constructor>
@@ -206,7 +232,7 @@
       </method>
       <constructor cname="gsf_input_gnomevfs_new">
         <parameters>
-          <parameter type="char" name="const*" />
+          <parameter type="const-char*" name="uri" />
           <parameter type="GError**" name="error" />
         </parameters>
       </constructor>
@@ -248,14 +274,14 @@
       </method>
       <constructor cname="gsf_input_memory_new">
         <parameters>
-          <parameter type="guint8" name="const*" />
+          <parameter type="const-guint8*" name="buf" />
           <parameter type="gsf_off_t" name="length" />
           <parameter type="gboolean" name="needs_free" />
         </parameters>
       </constructor>
       <constructor cname="gsf_input_memory_new_clone">
         <parameters>
-          <parameter type="guint8" name="const*" />
+          <parameter type="const-guint8*" name="buf" />
           <parameter type="gsf_off_t" name="length" />
         </parameters>
       </constructor>
@@ -295,8 +321,15 @@
       </method>
       <constructor cname="gsf_input_stdio_new">
         <parameters>
-          <parameter type="char" name="const*" />
+          <parameter type="const-char*" name="filename" />
           <parameter type="GError**" name="err" />
+        </parameters>
+      </constructor>
+      <constructor cname="gsf_input_stdio_new_FILE">
+        <parameters>
+          <parameter type="const-char*" name="filename" />
+          <parameter type="FILE*" name="file" />
+          <parameter type="gboolean" name="keep_open" />
         </parameters>
       </constructor>
     </object>
@@ -366,15 +399,15 @@
       <method name="MmapNew" cname="gsf_input_mmap_new" shared="true">
         <return-type type="GsfInput*" />
         <parameters>
-          <parameter type="char" name="const*" />
+          <parameter type="const-char*" name="filename" />
           <parameter type="GError**" name="err" />
         </parameters>
       </method>
       <method name="Name" cname="gsf_input_name">
-        <return-type type="charconst-*" />
+        <return-type type="const-char*" />
       </method>
       <method name="Read" cname="gsf_input_read">
-        <return-type type="guint8const-*" />
+        <return-type type="const-guint8*" />
         <parameters>
           <parameter type="size_t" name="num_bytes" />
           <parameter type="guint8*" name="optional_buffer" />
@@ -405,13 +438,13 @@
       <method name="SetName" cname="gsf_input_set_name">
         <return-type type="gboolean" />
         <parameters>
-          <parameter type="char" name="const*" />
+          <parameter type="const-char*" name="name" />
         </parameters>
       </method>
       <method name="SetNameFromFilename" cname="gsf_input_set_name_from_filename">
         <return-type type="gboolean" />
         <parameters>
-          <parameter type="char" name="const*" />
+          <parameter type="const-char*" name="filename" />
         </parameters>
       </method>
       <method name="SetSize" cname="gsf_input_set_size">
@@ -423,7 +456,7 @@
       <method name="Sibling" cname="gsf_input_sibling">
         <return-type type="GsfInput*" />
         <parameters>
-          <parameter type="char" name="const*" />
+          <parameter type="const-char*" name="name" />
           <parameter type="GError**" name="err" />
         </parameters>
       </method>
@@ -456,7 +489,7 @@
       <method name="SetClassId" cname="gsf_outfile_msole_set_class_id">
         <return-type type="gboolean" />
         <parameters>
-          <parameter type="guint8" name="const*" />
+          <parameter type="const-guint8*" name="clsid" />
         </parameters>
       </method>
     </object>
@@ -466,23 +499,23 @@
       </method>
       <constructor cname="gsf_outfile_stdio_new">
         <parameters>
-          <parameter type="char" name="const*" />
+          <parameter type="const-char*" name="root" />
           <parameter type="GError**" name="err" />
         </parameters>
       </constructor>
       <constructor cname="gsf_outfile_stdio_new_full">
         <parameters>
-          <parameter type="char" name="const*" />
+          <parameter type="const-char*" name="root" />
           <parameter type="GError**" name="err" />
-          <parameter type="char" name="const*" />
+          <parameter type="const-char*" name="first_property_name" />
           <parameter ellipsis="true" />
         </parameters>
       </constructor>
       <constructor cname="gsf_outfile_stdio_new_valist">
         <parameters>
-          <parameter type="char" name="const*" />
+          <parameter type="const-char*" name="root" />
           <parameter type="GError**" name="err" />
-          <parameter type="char" name="const*" />
+          <parameter type="const-char*" name="first_property_name" />
           <parameter type="va_list" name="var_args" />
         </parameters>
       </constructor>
@@ -494,25 +527,25 @@
       <constructor cname="gsf_outfile_new_child">
         <parameters>
           <parameter type="GsfOutfile*" name="outfile" />
-          <parameter type="char" name="const*" />
+          <parameter type="const-char*" name="name" />
           <parameter type="gboolean" name="is_dir" />
         </parameters>
       </constructor>
       <constructor cname="gsf_outfile_new_child_full">
         <parameters>
           <parameter type="GsfOutfile*" name="outfile" />
-          <parameter type="char" name="const*" />
+          <parameter type="const-char*" name="name" />
           <parameter type="gboolean" name="is_dir" />
-          <parameter type="char" name="const*" />
+          <parameter type="const-char*" name="first_property_name" />
           <parameter ellipsis="true" />
         </parameters>
       </constructor>
       <constructor cname="gsf_outfile_new_child_varg">
         <parameters>
           <parameter type="GsfOutfile*" name="outfile" />
-          <parameter type="char" name="const*" />
+          <parameter type="const-char*" name="name" />
           <parameter type="gboolean" name="is_dir" />
-          <parameter type="char" name="const*" />
+          <parameter type="const-char*" name="first_property_name" />
           <parameter type="va_list" name="args" />
         </parameters>
       </constructor>
@@ -543,7 +576,7 @@
       </method>
       <constructor cname="gsf_output_bonobo_new">
         <parameters>
-          <parameter type="const-Bonobo_Stream" name="stream" />
+          <parameter type="Bonobo_Stream" name="const-stream" />
           <parameter type="GError**" name="err" />
         </parameters>
       </constructor>
@@ -572,11 +605,11 @@
       <field name="FieldsOnLine" cname="fields_on_line" type="gboolean" />
       <field name="Buf" cname="buf" type="GString*" />
       <property name="Sink" cname="sink" type="GsfOutputType" readable="true" writeable="true" />
-      <property name="Quote" cname="quote" type="gchar*" readable="true" writeable="true" construct-only="true" />
-      <property name="QuotingMode" cname="quoting-mode" type="GsfOutputCsvQuotingModeType" readable="true" writeable="true" construct-only="true" />
+      <property name="Quote" cname="quote" type="gchar*" readable="true" writeable="true" construct="true" />
+      <property name="QuotingMode" cname="quoting-mode" type="GsfOutputCsvQuotingModeType" readable="true" writeable="true" construct="true" />
       <property name="QuotingTriggers" cname="quoting-triggers" type="gchar*" readable="true" writeable="true" />
-      <property name="Separator" cname="separator" type="gchar*" readable="true" writeable="true" construct-only="true" />
-      <property name="Eol" cname="eol" type="gchar*" readable="true" writeable="true" construct-only="true" />
+      <property name="Separator" cname="separator" type="gchar*" readable="true" writeable="true" construct="true" />
+      <property name="Eol" cname="eol" type="gchar*" readable="true" writeable="true" construct="true" />
       <method name="GetType" cname="gsf_output_csv_get_type" shared="true">
         <return-type type="GType" />
       </method>
@@ -586,7 +619,7 @@
       <method name="WriteField" cname="gsf_output_csv_write_field">
         <return-type type="gboolean" />
         <parameters>
-          <parameter type="char" name="const*" />
+          <parameter type="const-char*" name="field" />
           <parameter type="size_t" name="len" />
         </parameters>
       </method>
@@ -597,7 +630,7 @@
       </method>
       <constructor cname="gsf_output_gnomevfs_new">
         <parameters>
-          <parameter type="char" name="const*" />
+          <parameter type="const-char*" name="filename" />
           <parameter type="GError**" name="err" />
         </parameters>
       </constructor>
@@ -632,8 +665,8 @@
       <constructor cname="gsf_output_iconv_new">
         <parameters>
           <parameter type="GsfOutput*" name="sink" />
-          <parameter type="char" name="const*" />
-          <parameter type="char" name="const*" />
+          <parameter type="const-char*" name="dst" />
+          <parameter type="const-char*" name="src" />
         </parameters>
       </constructor>
     </object>
@@ -672,30 +705,30 @@
       </method>
       <constructor cname="gsf_output_stdio_new">
         <parameters>
-          <parameter type="char" name="const*" />
+          <parameter type="const-char*" name="filename" />
           <parameter type="GError**" name="err" />
         </parameters>
       </constructor>
       <constructor cname="gsf_output_stdio_new_FILE">
         <parameters>
-          <parameter type="char" name="const*" />
+          <parameter type="const-char*" name="filename" />
           <parameter type="FILE*" name="file" />
           <parameter type="gboolean" name="keep_open" />
         </parameters>
       </constructor>
       <constructor cname="gsf_output_stdio_new_full">
         <parameters>
-          <parameter type="char" name="const*" />
+          <parameter type="const-char*" name="filename" />
           <parameter type="GError**" name="err" />
-          <parameter type="char" name="const*" />
+          <parameter type="const-char*" name="first_property_name" />
           <parameter ellipsis="true" />
         </parameters>
       </constructor>
       <constructor cname="gsf_output_stdio_new_valist">
         <parameters>
-          <parameter type="char" name="const*" />
+          <parameter type="const-char*" name="filename" />
           <parameter type="GError**" name="err" />
-          <parameter type="char" name="const*" />
+          <parameter type="const-char*" name="first_property_name" />
           <parameter type="va_list" name="var_args" />
         </parameters>
       </constructor>
@@ -727,7 +760,7 @@
         <return-type type="GsfOutfile*" />
       </method>
       <method name="Error" cname="gsf_output_error">
-        <return-type type="GErrorconst-*" />
+        <return-type type="const-GError*" />
       </method>
       <method name="ErrorId" cname="gsf_output_error_id" shared="true">
         <return-type type="GQuark" />
@@ -739,19 +772,19 @@
         <return-type type="gboolean" />
       </method>
       <method name="Name" cname="gsf_output_name">
-        <return-type type="charconst-*" />
+        <return-type type="const-char*" />
       </method>
       <method name="Printf" cname="gsf_output_printf">
         <return-type type="gboolean" />
         <parameters>
-          <parameter type="char" name="const*" printf_format="true" />
+          <parameter type="const-char*" name="format" printf_format="true" />
           <parameter ellipsis="true" printf_format_args="true" />
         </parameters>
       </method>
       <method name="Puts" cname="gsf_output_puts">
         <return-type type="gboolean" />
         <parameters>
-          <parameter type="char" name="const*" />
+          <parameter type="const-char*" name="line" />
         </parameters>
       </method>
       <method name="Seek" cname="gsf_output_seek">
@@ -771,20 +804,20 @@
         <return-type type="gboolean" />
         <parameters>
           <parameter type="gint" name="code" />
-          <parameter type="char" name="const*" printf_format="true" />
+          <parameter type="const-char*" name="format" printf_format="true" />
           <parameter ellipsis="true" printf_format_args="true" />
         </parameters>
       </method>
       <method name="SetName" cname="gsf_output_set_name">
         <return-type type="gboolean" />
         <parameters>
-          <parameter type="char" name="const*" />
+          <parameter type="const-char*" name="name" />
         </parameters>
       </method>
       <method name="SetNameFromFilename" cname="gsf_output_set_name_from_filename">
         <return-type type="gboolean" />
         <parameters>
-          <parameter type="char" name="const*" />
+          <parameter type="const-char*" name="filename" />
         </parameters>
       </method>
       <method name="Size" cname="gsf_output_size">
@@ -803,7 +836,7 @@
       <method name="Vprintf" cname="gsf_output_vprintf">
         <return-type type="gsf_off_t" />
         <parameters>
-          <parameter type="char" name="const*" printf_format="true" printf_format_args="true" />
+          <parameter type="const-char*" name="format" printf_format="true" printf_format_args="true" />
           <parameter type="va_list" name="args" />
         </parameters>
       </method>
@@ -818,7 +851,7 @@
         <return-type type="gboolean" />
         <parameters>
           <parameter type="size_t" name="num_bytes" />
-          <parameter type="guint8" name="const*" />
+          <parameter type="const-guint8*" name="data" />
         </parameters>
       </method>
     </object>
@@ -874,26 +907,76 @@
         </parameters>
       </method>
     </object>
+    <object name="Blob" cname="GsfBlob" parent="GObject">
+      <field name="Priv" cname="priv" type="GsfBlobPrivate*" />
+      <method name="GetSize" cname="gsf_blob_get_size">
+        <return-type type="gsize" />
+      </method>
+      <method name="GetType" cname="gsf_blob_get_type" shared="true">
+        <return-type type="GType" />
+      </method>
+      <constructor cname="gsf_blob_new">
+        <parameters>
+          <parameter type="gsize" name="size" />
+          <parameter type="gconstpointer" name="data_to_copy" />
+          <parameter type="GError**" name="error" />
+        </parameters>
+      </constructor>
+      <method name="PeekData" cname="gsf_blob_peek_data">
+        <return-type type="gconst-pointer" />
+      </method>
+    </object>
+    <object name="ClipData" cname="GsfClipData" parent="GObject">
+      <field name="Priv" cname="priv" type="GsfClipDataPrivate*" />
+      <method name="GetDataBlob" cname="gsf_clip_data_get_data_blob">
+        <return-type type="GsfBlob*" />
+      </method>
+      <method name="GetFormat" cname="gsf_clip_data_get_format">
+        <return-type type="GsfClipFormat" />
+      </method>
+      <method name="GetType" cname="gsf_clip_data_get_type" shared="true">
+        <return-type type="GType" />
+      </method>
+      <method name="GetWindowsClipboardFormat" cname="gsf_clip_data_get_windows_clipboard_format">
+        <return-type type="GsfClipFormatWindows" />
+        <parameters>
+          <parameter type="GError**" name="error" />
+        </parameters>
+      </method>
+      <constructor cname="gsf_clip_data_new">
+        <parameters>
+          <parameter type="GsfClipFormat" name="format" />
+          <parameter type="GsfBlob*" name="data_blob" />
+        </parameters>
+      </constructor>
+      <method name="PeekRealData" cname="gsf_clip_data_peek_real_data">
+        <return-type type="gconst-pointer" />
+        <parameters>
+          <parameter type="gsize*" name="ret_size" />
+          <parameter type="GError**" name="error" />
+        </parameters>
+      </method>
+    </object>
     <object name="XMLOut" cname="GsfXMLOut" parent="GObject">
       <method name="AddBase64" cname="gsf_xml_out_add_base64">
         <return-type type="void" />
         <parameters>
-          <parameter type="char" name="const*" />
-          <parameter type="guint8" name="const*" />
+          <parameter type="const-char*" name="id" />
+          <parameter type="const-guint8*" name="data" />
           <parameter type="unsigned-int" name="len" />
         </parameters>
       </method>
       <method name="AddBool" cname="gsf_xml_out_add_bool">
         <return-type type="void" />
         <parameters>
-          <parameter type="char" name="const*" />
+          <parameter type="const-char*" name="id" />
           <parameter type="gboolean" name="val" />
         </parameters>
       </method>
       <method name="AddColor" cname="gsf_xml_out_add_color">
         <return-type type="void" />
         <parameters>
-          <parameter type="char" name="const*" />
+          <parameter type="const-char*" name="id" />
           <parameter type="unsigned-int" name="r" />
           <parameter type="unsigned-int" name="g" />
           <parameter type="unsigned-int" name="b" />
@@ -902,21 +985,21 @@
       <method name="AddCstr" cname="gsf_xml_out_add_cstr">
         <return-type type="void" />
         <parameters>
-          <parameter type="char" name="const*" />
-          <parameter type="char" name="const*" />
+          <parameter type="const-char*" name="id" />
+          <parameter type="const-char*" name="val_utf8" />
         </parameters>
       </method>
       <method name="AddCstrUnchecked" cname="gsf_xml_out_add_cstr_unchecked">
         <return-type type="void" />
         <parameters>
-          <parameter type="char" name="const*" />
-          <parameter type="char" name="const*" />
+          <parameter type="const-char*" name="id" />
+          <parameter type="const-char*" name="val_utf8" />
         </parameters>
       </method>
       <method name="AddEnum" cname="gsf_xml_out_add_enum">
         <return-type type="void" />
         <parameters>
-          <parameter type="char" name="const*" />
+          <parameter type="const-char*" name="id" />
           <parameter type="GType" name="etype" />
           <parameter type="gint" name="val" />
         </parameters>
@@ -924,7 +1007,7 @@
       <method name="AddFloat" cname="gsf_xml_out_add_float">
         <return-type type="void" />
         <parameters>
-          <parameter type="char" name="const*" />
+          <parameter type="const-char*" name="id" />
           <parameter type="double" name="val" />
           <parameter type="int" name="precision" />
         </parameters>
@@ -932,19 +1015,19 @@
       <method name="AddInt" cname="gsf_xml_out_add_int">
         <return-type type="void" />
         <parameters>
-          <parameter type="char" name="const*" />
+          <parameter type="const-char*" name="id" />
           <parameter type="int" name="val" />
         </parameters>
       </method>
       <method name="AddUint" cname="gsf_xml_out_add_uint">
         <return-type type="void" />
         <parameters>
-          <parameter type="char" name="const*" />
+          <parameter type="const-char*" name="id" />
           <parameter type="unsigned-int" name="val" />
         </parameters>
       </method>
       <method name="EndElement" cname="gsf_xml_out_end_element">
-        <return-type type="charconst-*" />
+        <return-type type="const-char*" />
       </method>
       <method name="GetType" cname="gsf_xml_out_get_type" shared="true">
         <return-type type="GType" />
@@ -957,20 +1040,20 @@
       <method name="SetDocType" cname="gsf_xml_out_set_doc_type">
         <return-type type="void" />
         <parameters>
-          <parameter type="char" name="const*" />
+          <parameter type="const-char*" name="type" />
         </parameters>
       </method>
       <method name="SimpleElement" cname="gsf_xml_out_simple_element">
         <return-type type="void" />
         <parameters>
-          <parameter type="char" name="const*" />
-          <parameter type="char" name="const*" />
+          <parameter type="const-char*" name="id" />
+          <parameter type="const-char*" name="content" />
         </parameters>
       </method>
       <method name="SimpleFloatElement" cname="gsf_xml_out_simple_float_element">
         <return-type type="void" />
         <parameters>
-          <parameter type="char" name="const*" />
+          <parameter type="const-char*" name="id" />
           <parameter type="double" name="val" />
           <parameter type="int" name="precision" />
         </parameters>
@@ -978,14 +1061,14 @@
       <method name="SimpleIntElement" cname="gsf_xml_out_simple_int_element">
         <return-type type="void" />
         <parameters>
-          <parameter type="char" name="const*" />
+          <parameter type="const-char*" name="id" />
           <parameter type="int" name="val" />
         </parameters>
       </method>
       <method name="StartElement" cname="gsf_xml_out_start_element">
         <return-type type="void" />
         <parameters>
-          <parameter type="char" name="const*" />
+          <parameter type="const-char*" name="id" />
         </parameters>
       </method>
     </object>
@@ -994,13 +1077,13 @@
         <return-type type="void" />
       </method>
       <method name="GetLink" cname="gsf_doc_prop_get_link">
-        <return-type type="charconst-*" />
+        <return-type type="const-char*" />
       </method>
       <method name="GetName" cname="gsf_doc_prop_get_name">
-        <return-type type="charconst-*" />
+        <return-type type="const-char*" />
       </method>
       <method name="GetVal" cname="gsf_doc_prop_get_val">
-        <return-type type="GValueconst-*" />
+        <return-type type="const-GValue*" />
       </method>
       <constructor cname="gsf_doc_prop_new">
         <parameters>
@@ -1035,12 +1118,12 @@
         <return-type type="char*" />
       </method>
       <method name="Copy" cname="gsf_timestamp_copy">
-        <return-type type="GsfTimestamp*" />
+        <return-type type="GsfTimestamp*" owned="true" />
       </method>
       <method name="Equal" cname="gsf_timestamp_equal">
         <return-type type="gboolean" />
         <parameters>
-          <parameter type="GsfTimestamp" name="const*" />
+          <parameter type="const-GsfTimestamp*" name="b" />
         </parameters>
       </method>
       <method name="Free" cname="gsf_timestamp_free">
@@ -1052,71 +1135,63 @@
       <method name="Hash" cname="gsf_timestamp_hash">
         <return-type type="guint" />
       </method>
-      <constructor cname="gsf_timestamp_new">
-        <parameters>
-          <parameter type="GDate" name="const*" />
-          <parameter type="glong" name="seconds" />
-          <parameter type="char" name="const*" />
-        </parameters>
-      </constructor>
-      <constructor cname="gsf_timestamp_new_now" />
       <method name="Parse" cname="gsf_timestamp_parse" shared="true">
         <return-type type="int" />
         <parameters>
-          <parameter type="char" name="const*" />
+          <parameter type="const-char*" name="spec" />
           <parameter type="GsfTimestamp*" name="stamp" />
         </parameters>
       </method>
     </boxed>
     <struct name="XMLBlob" cname="GsfXMLBlob" opaque="true" />
     <struct name="XMLIn" cname="GsfXMLIn">
-      <field name="Const" cname="const* doc" type="GsfXMLInDoc" />
-      <field name="Const" cname="const* node" type="GsfXMLInNode" />
-      <field name="StateStack" cname="state_stack" type="GSList*" />
-      <field name="Const" cname="const* default_ns" type="GsfXMLInNS" />
-      <field name="NsStack" cname="ns_stack" type="GSList*" />
+      <field name="UserState" cname="user_state" type="gpointer" />
       <field name="Content" cname="content" type="GString*" />
-      <field name="UnknownDepth" cname="unknown_depth" type="gint" />
-      <field name="NsPrefixes" cname="ns_prefixes" type="GHashTable*" />
-      <field name="NsById" cname="ns_by_id" type="GPtrArray*" />
+      <field name="Doc" cname="doc" type="const-GsfXMLInDoc*" />
+      <field name="Node" cname="node" type="const-GsfXMLInNode*" />
+      <field name="NodeStack" cname="node_stack" type="GSList*" />
       <method name="CheckNs" cname="gsf_xml_in_check_ns">
-        <return-type type="charconst-*" />
+        <return-type type="const-char*" />
         <parameters>
-          <parameter type="char" name="const*" />
+          <parameter type="const-char*" name="str" />
           <parameter type="unsigned-int" name="ns_id" />
         </parameters>
       </method>
       <method name="Namecmp" cname="gsf_xml_in_namecmp">
         <return-type type="gboolean" />
         <parameters>
-          <parameter type="char" name="const*" />
+          <parameter type="const-char*" name="str" />
           <parameter type="unsigned-int" name="ns_id" />
-          <parameter type="char" name="const*" />
+          <parameter type="const-char*" name="name" />
         </parameters>
       </method>
-      <method name="Parse" cname="gsf_xml_in_parse">
-        <return-type type="gboolean" />
+      <method name="PushState" cname="gsf_xml_in_push_state">
+        <return-type type="void" />
         <parameters>
-          <parameter type="GsfInput*" name="input" />
+          <parameter type="const-GsfXMLInDoc*" name="doc" />
+          <parameter type="gpointer" name="new_state" />
+          <parameter type="GsfXMLInExtDtor" name="dtor" />
+          <parameter type="const-xmlChar**" name="attrs" />
         </parameters>
       </method>
     </struct>
     <struct name="XMLInDoc" cname="GsfXMLInDoc" opaque="true">
-      <method name="Extend" cname="gsf_xml_in_doc_extend">
-        <return-type type="void" />
-        <parameters>
-          <parameter type="GsfXMLInNode*" name="nodes" />
-        </parameters>
-      </method>
       <method name="Free" cname="gsf_xml_in_doc_free">
         <return-type type="void" />
       </method>
       <constructor cname="gsf_xml_in_doc_new">
         <parameters>
-          <parameter type="GsfXMLInNode*" name="root" />
-          <parameter type="GsfXMLInNS*" name="ns" />
+          <parameter type="const-GsfXMLInNode*" name="nodes" />
+          <parameter type="const-GsfXMLInNS*" name="ns" />
         </parameters>
       </constructor>
+      <method name="Parse" cname="gsf_xml_in_doc_parse">
+        <return-type type="gboolean" />
+        <parameters>
+          <parameter type="GsfInput*" name="input" />
+          <parameter type="gpointer" name="user_state" />
+        </parameters>
+      </method>
       <method name="SetUnknownHandler" cname="gsf_xml_in_doc_set_unknown_handler">
         <return-type type="void" />
         <parameters>
@@ -1125,42 +1200,40 @@
       </method>
     </struct>
     <struct name="XMLInNS" cname="GsfXMLInNS">
-      <field name="Const" cname="const* uri" type="char" />
+      <field name="Uri" cname="uri" type="const-char*" />
       <field name="NsId" cname="ns_id" type="unsigned" />
     </struct>
     <struct name="XMLInNode" cname="GsfXMLInNode">
-      <field name="Const" cname="const* id" type="char" />
+      <field name="Id" cname="id" type="const-char*" />
       <field name="NsId" cname="ns_id" type="int" />
-      <field name="Const" cname="const* name" type="char" />
-      <field name="Const" cname="const* parent_id" type="char" />
-      <field name="ParentInitialized" cname="parent_initialized" type="gboolean" />
-      <field name="Groups" cname="groups" type="GSList*" />
-      <field name="HasContent" cname="has_content" type="unsigned" />
-      <field name="DeprecatedUnusedAllowUnknown" cname="deprecated_unused_allow_unknown" type="gboolean" />
-      <field name="CheckChildrenForNs" cname="check_children_for_ns" type="gboolean" />
+      <field name="Name" cname="name" type="const-char*" />
+      <field name="ParentId" cname="parent_id" type="const-char*" />
       <callback cname="start">
         <return-type type="void" />
         <parameters>
-          <parameter type="GsfXMLIn*" name="state," />
+          <parameter type="GsfXMLIn*" name="xin," />
         </parameters>
       </callback>
       <callback cname="end">
         <return-type type="void" />
         <parameters>
-          <parameter type="GsfXMLIn*" name="state," />
+          <parameter type="GsfXMLIn*" name="xin," />
         </parameters>
       </callback>
       <field name="VInt" cname="v_int" type="int" />
+      <field name="HasContent" cname="has_content" type="GsfXMLContent" />
+      <field name="CheckChildrenForNs" cname="check_children_for_ns" bits="1" type="unsigned int" />
+      <field name="ShareChildrenWithParent" cname="share_children_with_parent" bits="1" type="unsigned int" />
     </struct>
-    <struct name="ZipDirent" cname="GsfZipDirent">
-      <field name="Name" cname="name" type="char*" />
-      <field name="ComprMethod" cname="compr_method" type="GsfZipCompressionMethod" />
-      <field name="Crc32" cname="crc32" type="guint32" />
-      <field name="Csize" cname="csize" type="size_t" />
-      <field name="Usize" cname="usize" type="size_t" />
-      <field name="Offset" cname="offset" type="gsf_off_t" />
-      <field name="DataOffset" cname="data_offset" type="gsf_off_t" />
-      <field name="Dostime" cname="dostime" type="guint32" />
+    <struct name="ZipDirent" cname="GsfZipDirent" opaque="true">
+      <field name="Name" cname="name" type="char*" access="public" writeable="true" />
+      <field name="ComprMethod" cname="compr_method" type="GsfZipCompressionMethod" access="public" writeable="true" />
+      <field name="Crc32" cname="crc32" type="guint32" access="public" writeable="true" />
+      <field name="Csize" cname="csize" type="size_t" access="public" writeable="true" />
+      <field name="Usize" cname="usize" type="size_t" access="public" writeable="true" />
+      <field name="Offset" cname="offset" type="gsf_off_t" access="public" writeable="true" />
+      <field name="DataOffset" cname="data_offset" type="gsf_off_t" access="public" writeable="true" />
+      <field name="Dostime" cname="dostime" type="guint32" access="public" writeable="true" />
       <method name="Free" cname="gsf_zip_dirent_free">
         <return-type type="void" />
       </method>
@@ -1175,16 +1248,19 @@
     </struct>
     <alias name="GsfOffT" cname="gsf_off_t" type="gint64" />
     <class name="Global" cname="GsfGlobal">
+      <method name="ErrorQuark" cname="gsf_error_quark" shared="true">
+        <return-type type="GQuark" />
+      </method>
       <method name="ExtensionPointer" cname="gsf_extension_pointer" shared="true">
-        <return-type type="charconst-*" />
+        <return-type type="const-char*" />
         <parameters>
-          <parameter type="char" name="const*" />
+          <parameter type="const-char*" name="path" />
         </parameters>
       </method>
       <method name="FilenameToUtf8" cname="gsf_filename_to_utf8" shared="true">
         <return-type type="char*" />
         <parameters>
-          <parameter type="char" name="const*" />
+          <parameter type="const-char*" name="filename" />
           <parameter type="gboolean" name="quoted" />
         </parameters>
       </method>
@@ -1203,7 +1279,7 @@
       <method name="MemDump" cname="gsf_mem_dump" shared="true">
         <return-type type="void" />
         <parameters>
-          <parameter type="guint8" name="const*" />
+          <parameter type="const-guint8*" name="ptr" />
           <parameter type="size_t" name="len" />
         </parameters>
       </method>
@@ -1213,30 +1289,24 @@
           <parameter type="GTypeModule*" name="module" />
         </parameters>
       </method>
-      <method name="XmlParserContext" cname="gsf_xml_parser_context" shared="true">
-        <return-type type="xmlParserCtxt*" />
-        <parameters>
-          <parameter type="GsfInput*" name="input" />
-        </parameters>
-      </method>
     </class>
     <class name="Le" cname="GsfLe_">
       <method name="GetDouble" cname="gsf_le_get_double" shared="true">
         <return-type type="double" />
         <parameters>
-          <parameter type="void" name="const*" />
+          <parameter type="const-void*" name="p" />
         </parameters>
       </method>
       <method name="GetFloat" cname="gsf_le_get_float" shared="true">
         <return-type type="float" />
         <parameters>
-          <parameter type="void" name="const*" />
+          <parameter type="const-void*" name="p" />
         </parameters>
       </method>
       <method name="GetGuint64" cname="gsf_le_get_guint64" shared="true">
         <return-type type="guint64" />
         <parameters>
-          <parameter type="void" name="const*" />
+          <parameter type="const-void*" name="p" />
         </parameters>
       </method>
       <method name="SetDouble" cname="gsf_le_set_double" shared="true">
@@ -1270,7 +1340,7 @@
       <method name="IconvOpenCodepageForImport" cname="gsf_msole_iconv_open_codepage_for_import" shared="true">
         <return-type type="GIConv" />
         <parameters>
-          <parameter type="char" name="const*" />
+          <parameter type="const-char*" name="to" />
           <parameter type="int" name="codepage" />
         </parameters>
       </method>
@@ -1278,7 +1348,7 @@
         <return-type type="GIConv" />
         <parameters>
           <parameter type="int" name="codepage_to" />
-          <parameter type="char" name="const*" />
+          <parameter type="const-char*" name="from" />
         </parameters>
       </method>
       <method name="IconvOpenForExport" cname="gsf_msole_iconv_open_for_export" shared="true">
@@ -1301,7 +1371,7 @@
         </parameters>
       </method>
       <method name="LanguageForLid" cname="gsf_msole_language_for_lid" shared="true">
-        <return-type type="charconst-*" />
+        <return-type type="const-char*" />
         <parameters>
           <parameter type="guint" name="lid" />
         </parameters>
@@ -1309,7 +1379,7 @@
       <method name="LidForLanguage" cname="gsf_msole_lid_for_language" shared="true">
         <return-type type="guint" />
         <parameters>
-          <parameter type="char" name="const*" />
+          <parameter type="const-char*" name="lang" />
         </parameters>
       </method>
       <method name="LidToCodepage" cname="gsf_msole_lid_to_codepage" shared="true">
@@ -1335,8 +1405,31 @@
         <return-type type="gboolean" />
         <parameters>
           <parameter type="GsfOutput*" name="out" />
-          <parameter type="GsfDocMetaData" name="const*" />
+          <parameter type="const-GsfDocMetaData*" name="meta_data" />
           <parameter type="gboolean" name="doc_not_component" />
+        </parameters>
+      </method>
+    </class>
+    <class name="Opendoc" cname="GsfOpendoc_">
+      <method name="MetadataRead" cname="gsf_opendoc_metadata_read" shared="true">
+        <return-type type="GError*" />
+        <parameters>
+          <parameter type="GsfInput*" name="input" />
+          <parameter type="GsfDocMetaData*" name="md" />
+        </parameters>
+      </method>
+      <method name="MetadataSubtree" cname="gsf_opendoc_metadata_subtree" shared="true">
+        <return-type type="void" />
+        <parameters>
+          <parameter type="GsfXMLIn*" name="doc" />
+          <parameter type="GsfDocMetaData*" name="md" />
+        </parameters>
+      </method>
+      <method name="MetadataWrite" cname="gsf_opendoc_metadata_write" shared="true">
+        <return-type type="gboolean" />
+        <parameters>
+          <parameter type="GsfXMLOut*" name="output" />
+          <parameter type="const-GsfDocMetaData*" name="md" />
         </parameters>
       </method>
     </class>
@@ -1373,20 +1466,20 @@
       <method name="GetDocpropVarray" cname="gsf_value_get_docprop_varray" shared="true">
         <return-type type="GValueArray*" />
         <parameters>
-          <parameter type="GValue" name="const*" />
+          <parameter type="const-GValue*" name="value" />
         </parameters>
       </method>
       <method name="GetDocpropVector" cname="gsf_value_get_docprop_vector" shared="true">
         <return-type type="GsfDocPropVector*" />
         <parameters>
-          <parameter type="GValue" name="const*" />
+          <parameter type="const-GValue*" name="value" />
         </parameters>
       </method>
       <method name="SetTimestamp" cname="gsf_value_set_timestamp" shared="true">
         <return-type type="void" />
         <parameters>
           <parameter type="GValue*" name="value" />
-          <parameter type="GsfTimestamp" name="const*" />
+          <parameter type="const-GsfTimestamp*" name="stamp" />
         </parameters>
       </method>
     </class>
@@ -1408,9 +1501,25 @@
       <method name="New" cname="gsf_vdir_new" shared="true">
         <return-type type="GsfZipVDir*" />
         <parameters>
-          <parameter type="char" name="const*" />
+          <parameter type="const-char*" name="name" />
           <parameter type="gboolean" name="is_directory" />
           <parameter type="GsfZipDirent*" name="dirent" />
+        </parameters>
+      </method>
+    </class>
+    <class name="Xml" cname="GsfXml_">
+      <method name="GvalueFromStr" cname="gsf_xml_gvalue_from_str" shared="true">
+        <return-type type="gboolean" />
+        <parameters>
+          <parameter type="GValue*" name="res" />
+          <parameter type="GType" name="t" />
+          <parameter type="const-char*" name="str" />
+        </parameters>
+      </method>
+      <method name="ParserContext" cname="gsf_xml_parser_context" shared="true">
+        <return-type type="xmlParserCtxt*" />
+        <parameters>
+          <parameter type="GsfInput*" name="input" />
         </parameters>
       </method>
     </class>

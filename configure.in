@@ -1,7 +1,7 @@
 AC_INIT(README)
 AC_CANONICAL_SYSTEM
 AC_PROG_LIBTOOL
-AM_INIT_AUTOMAKE(gsf-sharp, 0.6)
+AM_INIT_AUTOMAKE(gsf-sharp, 0.7)
 AM_MAINTAINER_MODE
 
 dnl Defines CC to avoid warnings
@@ -45,15 +45,19 @@ AC_SUBST(GACUTIL_FLAGS)
 AC_SUBST(LIB_PREFIX)
 AC_SUBST(LIB_SUFFIX)
 
-PKG_CHECK_MODULES(GTK_SHARP, gtk-sharp-2.0 >= 1.9.5)
+PKG_CHECK_MODULES(GTK_SHARP, gtk-sharp-2.0 >= 2.3.90)
 AC_SUBST(GTK_SHARP_CFLAGS)
 AC_SUBST(GTK_SHARP_LIBS)
 
-PKG_CHECK_MODULES(GSF, libgsf-1 >= 1.12.1 libgsf-gnome-1 >= 1.12.1)
+PKG_CHECK_MODULES(GSF, libgsf-1 >= 1.13 libgsf-1 < 1.14 libgsf-gnome-1 >= 1.13 libgsf-gnome-1 < 1.14)
 AC_SUBST(GSF_CFLAGS)
 AC_SUBST(GSF_LIBS)
 gsf_prefix=`pkg-config --variable=prefix libgsf-1`
 AC_SUBST(gsf_prefix)
+
+dnl Remember to update this when it changes!
+GSF_SO_VERSION=113
+AC_SUBST(GSF_SO_VERSION)
 
 AC_PATH_PROG(GAPI_FIXUP, gapi2-fixup, no)
 AC_SUBST(GAPI_FIXUP)
@@ -74,7 +78,7 @@ else
 fi
 AC_SUBST(MONODOC)
 
-API_VERSION="0.0.0.5"
+API_VERSION="0.0.0.7"
 AC_SUBST(API_VERSION)
 
 AM_CONDITIONAL(ENABLE_MONODOC, test "x$enable_monodoc" = "xyes")

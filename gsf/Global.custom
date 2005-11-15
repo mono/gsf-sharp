@@ -1,5 +1,5 @@
 
-		[DllImport("libgsf-1-1.dll")]
+		[DllImport("libgsf-1.dll")]
 		static extern void gsf_init();
 
 		public static void Init() {

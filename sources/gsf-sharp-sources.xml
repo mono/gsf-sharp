@@ -1,10 +1,10 @@
 <gapi-parser-input>
   <api filename="../gsf/gsf-api.raw">
-    <library name="libgsf-1-1.dll">
+    <library name="libgsf-1.dll">
       <namespace name="Gsf">
-        <dir>libgsf-1.12.1/gsf</dir>
-        <dir>libgsf-1.12.1/gsf-gnome</dir>
-        <dir>libgsf-1.12.1/gsf-win32</dir>
+        <dir>libgsf-1.13.3/gsf</dir>
+        <dir>libgsf-1.13.3/gsf-gnome</dir>
+        <dir>libgsf-1.13.3/gsf-win32</dir>
       </namespace>
     </library>
   </api>

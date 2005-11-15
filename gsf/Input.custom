@@ -1,5 +1,5 @@
 
-		[DllImport("libgsf-1-1.dll")]
+		[DllImport("libgsf-1.dll")]
 		static extern IntPtr gsf_input_read(IntPtr raw, int num_bytes, IntPtr optional_buffer);
 
 		public byte[] Read(int num_bytes) {
@@ -12,7 +12,7 @@
 			return ret;
 		}
 
-		[DllImport("libgsf-1-1.dll")]
+		[DllImport("libgsf-1.dll")]
 		static extern bool gsf_input_seek(IntPtr raw, long offset, int whence);
 
 		public bool Seek(long offset, System.IO.SeekOrigin origin) {

@@ -1,5 +1,5 @@
 
-		[DllImport("libgsf-1-1.dll")]
+		[DllImport("libgsf-1.dll")]
 		static extern bool gsf_output_seek(IntPtr raw, long offset, int whence);
 
 		public bool Seek(long offset, System.IO.SeekOrigin origin) {

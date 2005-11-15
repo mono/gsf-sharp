@@ -1,3 +1,31 @@
+2005-11-15  Joe Shaw  <joeshaw@novell.com>
+
+	* configure.in: Version 0.7
+
+2005-11-15  Joe Shaw  <joeshaw@novell.com>
+
+	* configure.in: Require gtk-sharp 2.3.90.  Require libgsf-1
+	1.13, but less than 1.14.  Define the libgsf .so version in
+	here.  Update API_VERSION to 0.0.0.7.
+
+	* gsf/Input.custom, gsf/Global.custom, gsf/Output.custom:
+	Change the DllImport to load libgsf-1.dll instead of
+	libgsf-1-1.dll, which doesn't really make sense.
+
+	* gsf/gsf-sharp.dll.config.in: Change dllmap to libgsf-1.dll,
+	and add the libgsf .so version as defined in configure.in.
+
+	* gsf/Gsf.metadata: Now that we're using 2.3.90, we don't
+	need a bunch of crazy rules to handle "char const *" type
+	definitions.
+
+	* gsf/gsf-api.raw: Regenerate this, based on 1.13.3 sources.
+
+	* sources/gsf-sharp-sources.xml: Update for libgsf 1.13.3,
+	update library name to libgsf-1.dll.
+
+	* sources/makefile: Fetch the 1.13.3 sources from GNOME FTP.
+
 2005-11-03  Joe Shaw  <joeshaw@novell.com>
 
 	* configure.in: Version 0.6
