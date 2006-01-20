@@ -1,3 +1,8 @@
+2006-01-20  Daniel Drake  <dsd@gentoo.org>
+
+	* configure.in: Remove check for libgsf-gnome-1 since we don't generate
+	bindings for that at the moment.
+
 2005-11-15  Joe Shaw  <joeshaw@novell.com>
 
 	* configure.in: Version 0.7
