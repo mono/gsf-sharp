@@ -1,3 +1,8 @@
+2006-04-21  Joe Shaw  <joeshaw@novell.com>
+
+	* sources/makefile: Make the get-source-code target download the
+	1.14.0 tarball.
+
 2006-04-21  Daniel Drake  <dsd@gentoo.org>
 
 	* configure.in: Require libgsf-1 1.14, but less than 1.15. Change
