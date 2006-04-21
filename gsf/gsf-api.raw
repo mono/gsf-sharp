@@ -1012,6 +1012,13 @@
           <parameter type="int" name="precision" />
         </parameters>
       </method>
+      <method name="AddGvalue" cname="gsf_xml_out_add_gvalue">
+        <return-type type="void" />
+        <parameters>
+          <parameter type="const-char*" name="id" />
+          <parameter type="const-GValue*" name="val" />
+        </parameters>
+      </method>
       <method name="AddInt" cname="gsf_xml_out_add_int">
         <return-type type="void" />
         <parameters>
@@ -1248,6 +1255,12 @@
     </struct>
     <alias name="GsfOffT" cname="gsf_off_t" type="gint64" />
     <class name="Global" cname="GsfGlobal">
+      <method name="DocMetaDump" cname="gsf_doc_meta_dump" shared="true">
+        <return-type type="void" />
+        <parameters>
+          <parameter type="const-GsfDocMetaData*" name="meta" />
+        </parameters>
+      </method>
       <method name="ErrorQuark" cname="gsf_error_quark" shared="true">
         <return-type type="GQuark" />
       </method>

@@ -1,3 +1,11 @@
+2006-04-21  Daniel Drake  <dsd@gentoo.org>
+
+	* configure.in: Require libgsf-1 1.14, but less than 1.15. Change
+	GSF_SO_VERSION to match the new .so version. Bump version to 0.8.
+
+	* sources/gsf-sharp-sources.xml, gsf/gsf-api.raw: Regenerate against
+	libgsf-1.14.0.
+
 2006-01-20  Daniel Drake  <dsd@gentoo.org>
 
 	* configure.in: Remove check for libgsf-gnome-1 since we don't generate

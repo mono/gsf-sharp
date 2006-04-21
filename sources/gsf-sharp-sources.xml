@@ -2,9 +2,9 @@
   <api filename="../gsf/gsf-api.raw">
     <library name="libgsf-1.dll">
       <namespace name="Gsf">
-        <dir>libgsf-1.13.3/gsf</dir>
-        <dir>libgsf-1.13.3/gsf-gnome</dir>
-        <dir>libgsf-1.13.3/gsf-win32</dir>
+        <dir>libgsf-1.14.0/gsf</dir>
+        <dir>libgsf-1.14.0/gsf-gnome</dir>
+        <dir>libgsf-1.14.0/gsf-win32</dir>
       </namespace>
     </library>
   </api>
