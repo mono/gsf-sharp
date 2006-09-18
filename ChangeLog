@@ -1,3 +1,9 @@
+2006-09-18  Joe Shaw  <joeshaw@novell.com>
+
+	* gsf/Gsf.metadata: Mark the Infile.ChildByName method as owning
+	its reference to fix leaks that would cause files to never be
+	closed.
+
 2006-04-21  Joe Shaw  <joeshaw@novell.com>
 
 	* sources/makefile: Make the get-source-code target download the
