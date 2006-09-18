@@ -1,5 +1,9 @@
 2006-09-18  Joe Shaw  <joeshaw@novell.com>
 
+	* configure.in: Bump version to 0.8.1.  Require gtk-sharp 2.4.0.
+
+	* sources/makefile: Download the 1.14.1 tarball.
+
 	* gsf/Gsf.metadata: Mark the Infile.ChildByName method as owning
 	its reference to fix leaks that would cause files to never be
 	closed.
